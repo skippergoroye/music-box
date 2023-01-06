@@ -1,10 +1,9 @@
 import express from 'express';
-import path from 'path';
-import cookieParser = require('cookie-parser');
 import logger from 'morgan';
 import cors from 'cors';
-import mongoose from 'mongoose';
+import userRoute from './routes/auth'
 import dotenv from 'dotenv';
+import connectMongoDB from './Database';
 dotenv.config()
 
 
@@ -12,14 +11,7 @@ dotenv.config()
 
 
 // connect DB
-mongoose.set('strictQuery', false);
-mongoose.connect(process.env.DB_STRING as string)
-.then(()=>{
-    console.log("Database Connected Successfully")
-})
-.catch((error)=> {
-    console.log(error)
-})
+connectMongoDB()
 
 
 
@@ -27,18 +19,22 @@ const app = express();
 const PORT = process.env.PORT
  
 
-
-
-
 app.use(logger('dev'));
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cors({origin : true}))
+
 
 
 app.get("/", (req, res)=>{
     return res.json("Hai there......")
 })
+
+
+// User Authentication route
+app.use('/api/users/', userRoute)
+
+
 
 
 

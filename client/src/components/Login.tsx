@@ -4,7 +4,6 @@ import { app } from '../config/firebase.config'
 import {} from 'firebase/auth'
 
 
-import { FcGoogle } from 'react-icons/fc'
 
 const Login = () => {
 
