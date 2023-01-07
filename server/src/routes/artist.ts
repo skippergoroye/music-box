@@ -30,9 +30,9 @@ router.get("/getOne/:id", async (req, res) => {
   const data = await artistModel.findOne(filter);
 
   if (data) {
-    return res.json(data);
+    return res.status(200).send({ success: true, artist: data });
   } else {
-    return res.json("Data No found");
+    return res.status(400).send({ success: false, msg: "Data no found" });
   }
 });
 
@@ -70,7 +70,7 @@ router.put("/update/:id", async (req, res) => {
       filter,
       {
         name: req.body.name,
-        imageURL: req.body.imageURL,
+        imageUrl: req.body.imageUrl,
         twitter: req.body.twitter,
         instagram: req.body.instagram,
       },
