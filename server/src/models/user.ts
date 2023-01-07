@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-interface UserInstance {
+export interface UserInstance {
   name: String;
   email: String;
   imageUrl: String;

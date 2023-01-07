@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import admin from "../config/firebase.config";
-import { userModel } from "../models/user";
+import { userModel, UserInstance } from "../models/user";
 
 
 const router = express.Router();

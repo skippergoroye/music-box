@@ -7,6 +7,9 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const auth_1 = __importDefault(require("./routes/auth"));
+const artist_1 = __importDefault(require("./routes/artist"));
+const albums_1 = __importDefault(require("./routes/albums"));
+const songs_1 = __importDefault(require("./routes/songs"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const Database_1 = __importDefault(require("./Database"));
 dotenv_1.default.config();
@@ -23,6 +26,9 @@ app.get("/", (req, res) => {
 });
 // User Authentication route
 app.use('/api/users/', auth_1.default);
+app.use('/api/artists/', artist_1.default);
+app.use('/api/albums/', albums_1.default);
+app.use('/api/songs/', songs_1.default);
 app.listen(PORT, () => {
     console.log(`Server started on ${PORT}`);
 });

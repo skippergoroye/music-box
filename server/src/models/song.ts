@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-interface songInstance {
+export interface songInstance {
   name: String;
   imageUrl: String;
   songURL: String;
