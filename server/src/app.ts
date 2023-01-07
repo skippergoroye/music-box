@@ -22,7 +22,7 @@ const PORT = process.env.PORT
 app.use(logger('dev'));
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
-// app.use(cors({origin : true}))
+app.use(cors({origin : true}))
 
 
 
