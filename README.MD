@@ -45,4 +45,9 @@ const DashboardUsers = () => {
 
 export default DashboardUsers
 
+<motion.div className='absolute z-10 top-6 right-4 p-4 flex items-start flex-col gap-4 bg-white shadow-xl rounded-md'>
+                    <p className='text-textColor text-sm font-semibold'>Are you sure, do want to mark the user as <span>{ data.role === "admin" ? "Member" : "Admin"}</span> ? </p>
+
+                </motion.div>
+
 

@@ -78,4 +78,26 @@ router.get("/getUsers", async (req, res) => {
         res.status(200).send({ success: true, msg: "No Data Found" });
     }
 });
+router.put("/updateRole/:userId", async (req, res) => {
+    const filter = { _id: req.params.userId };
+    const role = req.body.data.role;
+    try {
+        const result = await user_1.userModel.findOneAndUpdate(filter, { role: role });
+        res.status(200).send({ user: result });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+router.delete("/deleteUser/:userId", async (req, res) => {
+    const filter = { _id: req.params.userId };
+    const result = await user_1.userModel.deleteOne(filter);
+    if (result.deletedCount === 1) {
+        res.status(200).send({ success: true, msg: "User Removed" });
+    }
+    else {
+        res.status(500).send({ success: false, msg: "User Not Found" });
+    }
+    ;
+});
 exports.default = router;
