@@ -63,4 +63,19 @@ const updateUserData = async (decodeValue, req, res) => {
         res.status(400).send({ success: false, msg: err });
     }
 };
+router.get("/getUsers", async (req, res) => {
+    // const options = {
+    //   // sort returned documents in ascending order
+    //   sort: { createdAt: 1 },
+    //   // Include only the following
+    //   // projection : {}
+    // };
+    const cursor = await user_1.userModel.find().sort({ _id: -1 });
+    if (cursor) {
+        res.status(200).send({ success: true, data: cursor });
+    }
+    else {
+        res.status(200).send({ success: true, msg: "No Data Found" });
+    }
+});
 exports.default = router;

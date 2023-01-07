@@ -32,7 +32,7 @@ router.get("/getOne/:id", async (req, res) => {
   if (data) {
     return res.status(200).send({ success: true, artist: data });
   } else {
-    return res.status(400).send({ success: false, msg: "Data no found" });
+    return res.status(400).send({ success: false, msg: "Data not found" });
   }
 });
 
@@ -49,7 +49,7 @@ router.get("/getAll", async (req, res) => {
   if (data) {
     return res.status(200).send({ success: true, artist: data });
   } else {
-    return res.status(400).send({ success: false, msg: "Data no found" });
+    return res.status(400).send({ success: false, msg: "Data not found" });
   }
 });
 
