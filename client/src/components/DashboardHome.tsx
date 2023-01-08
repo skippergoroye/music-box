@@ -34,7 +34,7 @@ const DashboardHome = () => {
     getAllSongs().then((data) => {
       dispatch({
         type: actionType.SET_ALL_SONGS,
-        allSongs: data.data,
+        allSongs: data.songs,
       });
     });
   }
@@ -43,7 +43,7 @@ const DashboardHome = () => {
     getAllArtist().then((data) => {
       dispatch({ 
         type: actionType.SET_ALL_ARTIST, 
-        allArtist: data.data
+        allArtist: data.artist,
       });
     });
   }
@@ -52,7 +52,7 @@ const DashboardHome = () => {
     getAllAlbums().then((data) => {
       dispatch({ 
         type: actionType.SET_ALL_ALBUMS, 
-        allAlbums: data.data 
+        allAlbums: data.album,
       });
     });
   }

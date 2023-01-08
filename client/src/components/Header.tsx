@@ -12,7 +12,7 @@ import { app } from "../config/firebase.config";
 import { motion } from "framer-motion";
 
 const Header = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }, dispatch]: any = useStateValue();
   const [isMenu, setIsMenu] = useState(false);
 
   const navigate = useNavigate();
