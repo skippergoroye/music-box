@@ -118,8 +118,9 @@ export const saveNewArtist = async (data: any) => {
 export const saveNewSong = async (data: any) => {
   try {
     const res = axios.post(`${baseURL}/api/songs/save`, { ...data });
-    return (await res).data.song;
+    return (await res).data.savedSong;
   } catch (error) {
+    console.log(error)
     return null;
   }
 };

@@ -17,7 +17,7 @@ router.post("/save", async (req, res) => {
     const savedSong = await newSong.save();
     res
       .status(200)
-      .send({ success: "Artist saved successfully", song: savedSong });
+      .send({ success: "Song saved successfully", song: savedSong });
   } catch (error) {
     res.status(400).send({ success: false, msg: error });
   }

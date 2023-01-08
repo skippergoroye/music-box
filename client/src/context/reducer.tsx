@@ -9,7 +9,6 @@ export const actionType = {
     SET_ARTIST_FILTER: "SET_ARTIST_FILTER",
     SET_LANGUAGE_FILTER: "SET_LANGUAGE_FILTER",
     SET_ALBUM_FILTER: "SET_ALBUM_FILTER",
-    
 };
 
 const reducer = (state: any, action: any) => {
