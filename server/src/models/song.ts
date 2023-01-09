@@ -29,11 +29,11 @@ const songSchema = new Schema<songInstance>(
     },
     artist: {
         type: String,
-        required: true,
+        // required: true,
     },
     language: {
         type: String,
-        required: true,
+        // required: true,
     },
     category: {
         type: String,
