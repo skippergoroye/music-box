@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -L  src/app.ts",
+    "dev": "nodemon src/app.ts",
     "compile": "tsc -w",
-    "start": "nodemon -L  dist/app.js"
+    "start": "nodemon dist/app.js"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",

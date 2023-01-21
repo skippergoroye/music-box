@@ -1,86 +1,73 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-  deleteObject,
-} from "firebase/storage";
-import { motion } from "framer-motion";
-
-import { BiCloudUpload } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
-
-import { storage } from "../config/firebase.config";
-import { useStateValue } from "../context/StateProvider";
-
-import {
-  getAllAlbums,
-  getAllArtist,
-  getAllSongs,
-  saveNewAlbum,
-  saveNewArtist,
-  saveNewSong,
-} from "../api";
-import { actionType } from "../context/reducer";
-import { IoMusicalNote } from "react-icons/io5";
-import FilterButtons from "./FilterButtons";
+import { motion } from 'framer-motion';
+import React from 'react'
+import { RiPlayListFill } from 'react-icons/ri';
+import AudioPlayer from 'react-h5-audio-player';
+import { useStateValue } from '../context/StateProvider';
 
 
-import { filterByLanguage, filters } from "../utils/supportfunctions";
-// import AlertSuccess from "./AlertSuccess";
-// import AlertError from "./AlertError";
 
-const DashBoardNewSong = () => {
-
-  const [songName, setSongName] = useState("")
-  const [{ allArtist, allAlbums }, dispatch]: any = useStateValue();
-
-
-useEffect(() => {
-  if(!allArtist){
-    getAllArtist().then(data => {
-      dispatch({
-        type: actionType.SET_ALL_ARTIST,
-        allArtist: data.data,
-      });
-      console.log(data)
-    })
-  }
-
-  if(!allAlbums){
-    getAllAlbums().then(data => {
-      dispatch({
-        type: actionType.SET_ALL_ALBUMS,
-        allAlbums: data.data,
-      });
-      console.log(data)
-    })
-  }
-}, [])
-
+const MusicPlayer = () => {
+  const [{  allSongs, songIndex, isSongPlaying  }, dispatch]: any = useStateValue();
 
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 border border-gray-300 gap-4 rounded-md">
-      DashBoardNewSong helleo
-      <input
-        type="text"
-        placeholder="Type your song name..."  
-        className="w-full p-3 rounded-md text-base font-semibold text-textColor outline-none shadow-sm border border-gray-30" //bg-transparent
-        value={songName}
-        onChange={(e) => setSongName(e.target.value)}
-      />
+    <div className='w-full flex item-center gap-3 overflow-hidden'>
+      <div className={`w-full items-center gap-3 p-4 flex relative`}>
+        <img src={allSongs[songIndex]?.imageUrl} alt="" 
+        
+         className='w-40 h-20 object-cover rounded-md'/>
 
+         <div className='flex items-start flex-col'>
+          <p className='text-xl text-headingColor font-semibold'>
+            {`$ {
+              allSongs[songIndex]?.name.length > 20
+                  ? allSongs[songIndex]?.name.slice(0, 20)
+                  : allSongs[songIndex]?.name
+               }`}{" "}
+               <span className='text-base'>({allSongs[songIndex]?.album})</span>
+          </p>
+          <p className='text-textColor'>
+            {allSongs[songIndex]?.artist}{" "}
+            <span className='text-sm text-textColor font-semibold'>
+              ({allSongs[songIndex]?.category})
+            </span>
+          </p>
 
-      <div className="flex w-full justify-between flex-wrap items-center gap-4">
-        <FilterButtons filterData={"allArtist"} flag={"Artist"} />
-        <FilterButtons filterData={"allAlbums"} flag={"Albums"} />
-        <FilterButtons filterData={"filterByLanguage"} flag={"language"} />
-        <FilterButtons filterData={"filters"} flag={"Category"} />
-      </div>
+          <motion.i
+            whileTap={{ scale: 0.8 }}
+            // onClick={() => setIsPlayList(!isPlayList)}
+          >
+            <RiPlayListFill className="text-textColor hove:text-headingColor"/>
+          </motion.i>
+
+         </div>
+
+         <div className='flex-1'>
+            <AudioPlayer
+              src={allSongs[songIndex]?.songURL}
+              onPlay={() => console.log("is playing")}
+              autoPlay={true}
+              showSkipControls={true}
+          //     onClickNext={nextTrack}
+          //     onClickPrevious={previousTrack}
+          />
+         </div>
+      </div> 
     </div>
-  );
-};
+  )
+}
 
-export default DashBoardNewSong;
+export default MusicPlayer
+
+
+
+
+
+
+
+
+
+
+
+
+

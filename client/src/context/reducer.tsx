@@ -9,10 +9,14 @@ export const actionType = {
     SET_ARTIST_FILTER: "SET_ARTIST_FILTER",
     SET_LANGUAGE_FILTER: "SET_LANGUAGE_FILTER",
     SET_ALBUM_FILTER: "SET_ALBUM_FILTER",
+
+    SET_ALERT_TYPE: "SET_ALERT_TYPE",
+    SET_ISSONG_PLAYING: "SET_ISSONG_PLAYING",
+    SET_SONG_INDEX: "SET_SONG_INDEX",
 };
 
 const reducer = (state: any, action: any) => {
-    console.log(action)
+    // console.log(action)
 
     switch(action.type){
         case actionType.SET_USER:
@@ -66,6 +70,22 @@ const reducer = (state: any, action: any) => {
                 ...state,
                 albumFilter: action.albumFilter,
             };
+        case actionType.SET_ALERT_TYPE:
+            return {
+                ...state,
+                alertType: action.alertType,
+            };
+        case actionType.SET_ISSONG_PLAYING:
+            return {
+                ...state,
+                isSongPlaying: action.isSongPlaying,
+            }
+        case actionType.SET_SONG_INDEX:
+            return {
+                ...state,
+                songIndex: action.songIndex,
+            };
+            
         default: 
             return state;
     }

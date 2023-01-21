@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import  { useStateValue } from '../context/StateProvider';
 import { motion } from "framer-motion";
 import { MdDelete } from "react-icons/md" 
@@ -17,6 +17,20 @@ export const DashboardUserCard = ({ data, index }: any) => {
     const [{ user, allUsers },  dispatch]: any = useStateValue();
     const [isUserRoleUpdated, setIsUserRoleUpdated] = useState(false)  
     const createdAt = moment(new Date(data.createdAt)).format("MMMM Do YYYY")
+
+    useEffect(() => {
+        if (!allUsers) {
+            getAllUsers().then((data) => {
+                dispatch({
+                type: actionType.SET_ALL_USERS,
+                allUsers: data.data,
+                });
+            });
+            }
+    }, [])
+
+
+
 
     const updateUserRole = (userId: any, role: any) => {
         setIsUserRoleUpdated(false)
@@ -84,7 +98,7 @@ export const DashboardUserCard = ({ data, index }: any) => {
                 }
 
                 {isUserRoleUpdated && (
-                    <motion.div 
+                    <motion.div key={index}
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}

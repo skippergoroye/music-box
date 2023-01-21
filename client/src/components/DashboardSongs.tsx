@@ -3,13 +3,27 @@ import { NavLink } from "react-router-dom";
 import { IoAdd, IoPause, IoPlay, IoTrash } from "react-icons/io5";
 import { AiOutlineClear } from "react-icons/ai";
 import { useStateValue } from "../context/StateProvider";
-import { getAllSongs } from "../api";
+import { getAllArtist, getAllSongs } from "../api";
 import { actionType } from "../context/reducer";
 import SongCard from "./SongCard";
 
 const DashboardSongs = () => {
   const [songFilter, setSongFilter] = useState("");
   const [isFocus, setIsFocus] = useState(false);
+  const [{ allSongs }, dispatch]: any = useStateValue();
+
+
+  useEffect(() => {
+    if(!allSongs){
+      getAllSongs().then((data) => {
+        console.log(data.songs);
+        dispatch({
+          type: actionType.SET_ALL_SONGS,
+          allSongs: data.songs,
+        })
+      })
+    }
+  })
 
   //  Tools needed to call data from the backend
   // export const getAllSongs = async () => {
@@ -20,18 +34,20 @@ const DashboardSongs = () => {
   //     return null;
   //   }
   // };
-  const [{ allSongs }, dispatch]: any = useStateValue();
 
-  useEffect(() => {
-    if (!allSongs) {
-      getAllSongs().then((data) => {
-        dispatch({
-          type: actionType.SET_ALL_SONGS,
-          allSongs: data.songs,
-        });
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!allArtist) {
+  //     getAllArtist().then((data) => {
+  //       dispatch({
+  //         type: actionType.SET_ALL_ARTIST,
+  //         allArtist: data.songs,
+  //       });
+  //     });
+  //   }
+  // }, []);
+
+
+
 
   return (
     <div className="w-full p-4 flex items-center justify-center flex-col">
@@ -65,7 +81,7 @@ const DashboardSongs = () => {
       </div>
 
       {/* Main container */}
-      <div className="relative w-full my-4 p-4 border border-gray-600 rounded-md">
+      <div className="relative w-full my-8 p-4 py-16 border border-gray-600 rounded-md">
         {/* The count */}
         <div className="absolute top-4 left-4">
           <p className="text-xl font-bold">
