@@ -88,6 +88,17 @@ const DashBoardNewSong = () => {
         });
       });
     }
+
+
+
+    if (!allSongs) {
+      getAllSongs().then((data) => {
+        dispatch({
+          type: actionType.SET_ALL_SONGS,
+          allSongs: data.songs,
+        });
+      });
+    }
   }, []);
 
   const deleteFileObject = (url: any, isImage: any) => {

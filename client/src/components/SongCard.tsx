@@ -37,7 +37,7 @@ const SongCard = ({ data, index, type }: any) => {
         getAllArtist().then((data) => {
           dispatch({
             type: actionType.SET_ALL_ARTIST,
-            alertType: data.artist
+            alertType: data.artist,
           });
         });
       }
@@ -49,7 +49,7 @@ const SongCard = ({ data, index, type }: any) => {
         getAllAlbums().then((data) => {
           dispatch({
             type: actionType.SET_ALL_ALBUMS,
-            allAlbums: data.album
+            allAlbums: data.album,
           });
         });
       }
@@ -58,7 +58,10 @@ const SongCard = ({ data, index, type }: any) => {
 
   
 
+
+
   const addToContext = () => {
+    console.log(type)
     if(!isSongPlaying){
       dispatch({
         type: actionType.SET_ISSONG_PLAYING,
@@ -69,19 +72,18 @@ const SongCard = ({ data, index, type }: any) => {
     if(songIndex !== index){
       dispatch({
         type: actionType.SET_SONG_INDEX,
-        songIndex: index
+        songIndex: index,
       });
     }
-    
   }
 
 
-
+  console.log(type)
 
   return (
     <motion.div
       className="relative w-40 min-w-210 px-2 py-4 cusor-pointer hover:bg-card bg-gray-100 shadow-md rounded-lg flex flex-col items-center"
-      onClick = {type === 'song' && addToContext}
+      onClick = {type && addToContext}
     >
 
       <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
@@ -128,7 +130,7 @@ const SongCard = ({ data, index, type }: any) => {
             <motion.button
               className="px-2 py-1 text-sm uppercase bg-red-300 rounded-md hover:bg-red-500 cursor-pointer"
               whileTap = {{ scale: 0.7 }}
-              onClick = {deleteData(data)}
+              onClick = {()=>deleteData(data)}
             >
               Yes
             </motion.button>

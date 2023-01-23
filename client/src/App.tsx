@@ -53,6 +53,7 @@ const App = () => {
           <Route path="/login" element={<Login setAuth={setAuth} />} />
           <Route path="/*" element={<Home />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
+          {/* <Route path="/music" element={<MusicPlayer />} /> */}
         </Routes>
 
 
@@ -65,11 +66,10 @@ const App = () => {
           <MusicPlayer />
           </motion.div>
         )}
-
      </div>
     </AnimatePresence>
-  )
-}
+  );
+};
 
 export default App
 

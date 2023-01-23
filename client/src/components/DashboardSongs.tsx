@@ -106,7 +106,7 @@ export const SongContainer = ({ data }: any) => {
       {
         data && (
           data?.map((song: any, index: any)=>(
-            <SongCard key={song._id} data={song} index={index} /> 
+            <SongCard key={song._id} data={song} index={index} type={song} /> 
           ))
         )
       }
