@@ -10,6 +10,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { validateUser } from './api'
 import { useStateValue } from './context/StateProvider'
 import { actionType } from './context/reducer'
+import { ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
@@ -48,12 +50,12 @@ const App = () => {
 
   return (
     <AnimatePresence>
+      <ToastContainer />
       <div className='h-auto min-w-[680px] bg-primary flex justify-center items-center'>
         <Routes>
           <Route path="/login" element={<Login setAuth={setAuth} />} />
           <Route path="/*" element={<Home />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
-          {/* <Route path="/music" element={<MusicPlayer />} /> */}
         </Routes>
 
 

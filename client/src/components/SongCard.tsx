@@ -61,7 +61,7 @@ const SongCard = ({ data, index, type }: any) => {
 
 
   const addToContext = () => {
-    console.log(type)
+    // console.log(type)
     if(!isSongPlaying){
       dispatch({
         type: actionType.SET_ISSONG_PLAYING,
@@ -130,7 +130,7 @@ const SongCard = ({ data, index, type }: any) => {
             <motion.button
               className="px-2 py-1 text-sm uppercase bg-red-300 rounded-md hover:bg-red-500 cursor-pointer"
               whileTap = {{ scale: 0.7 }}
-              onClick = {()=>deleteData(data)}
+              onClick = {deleteData(data)}
             >
               Yes
             </motion.button>

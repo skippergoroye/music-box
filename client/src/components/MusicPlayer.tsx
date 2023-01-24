@@ -1,51 +1,68 @@
-import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react'
 import { RiPlayListFill } from 'react-icons/ri';
-import AudioPlayer from 'react-h5-audio-player';
-import { useStateValue } from '../context/StateProvider';
-import { actionType } from '../context/reducer';
+import { useStateValue } from '../context/StateProvider'
+
+import AudioPlayer from "react-h5-audio-player";
+import 'react-h5-audio-player/lib/styles.css';
 import { getAllSongs } from '../api';
+import { actionType } from '../context/reducer';
+import { all } from 'axios';
 import { IoMusicalNote } from 'react-icons/io5';
 
-
-
 const MusicPlayer = () => {
-  const [{  allSongs, songIndex, isSongPlaying }, dispatch]: any = useStateValue();
-  const [isPlayList, setIsPlayList] = useState(true);
 
-  console.log(allSongs)
-  console.log(songIndex)
+  const nextTrack = () => {
+    if(songIndex > allSongs.length - 1){
+      dispatch({
+        type: actionType.SET_SONG_INDEX,
+        songIndex: 0,
+      });
+    } else {
+      dispatch({
+        type: actionType.SET_SONG_INDEX,
+        songIndex: songIndex + 1,
+      });
+    }
+  }
 
-  
+  const previousTrack = () => {
+    if(songIndex === 0){
+      dispatch({
+        type: actionType.SET_SONG_INDEX,
+        songIndex: 0,
+      });
+    } else {
+      dispatch({
+        type: actionType.SET_SONG_INDEX,
+        songIndex: songIndex - 1,
+      });
+    }
+  }
 
 
-  // useEffect(() => {
-  //   if (song > allSongs.length) {
-  //     dispatch({
-  //       type: actionType.SET_SONG,
-  //       song: 0,
-  //     });
-  //   }
-  // }, [song]);
+
+  const [{ allSongs, songIndex, isSongPlaying}, dispatch]: any = useStateValue();
+  const [isPlayList, setIsPlayList] = useState(false)
 
 
   return (
-    <div className='w-full flex item-center gap-3'>
+    <div className='w-full flex items-center gap-3'>
       <div className={`w-full items-center gap-3 p-4 flex relative`}>
-         <img src={allSongs[songIndex]?.imageUrl} alt="" className='w-40 h-20 object-cover rounded-md'/>
-
-         <div className='flex items-start flex-col'>
+        <img src={allSongs[songIndex]?.imageUrl} alt="" className="w-40 h-20 object-cover rounded-md" />
+        
+        <div className='flex items-start flex-col'>
           <p className='text-xl text-headingColor font-semibold'>
-
-          {`${
-            allSongs[songIndex]?.name.length > 20
-            ? allSongs[songIndex]?.name.slice(0, 20)
-            : allSongs[songIndex]?.name
-          }`}{" "}
-            <span className='text-base'>({allSongs[songIndex]?.album})</span>
+            {`${
+              allSongs[songIndex]?.name.length > 20
+                  ? allSongs[songIndex]?.name.slice(0, 20)
+                  : allSongs[songIndex]?.name
+            }`}
+            <span className="text-base">({allSongs[songIndex]?.album})</span>
           </p>
-           <p className='text-textColor'>
-            {allSongs[songIndex]?.artist}{" "}
+
+          <p className='text-textColor'>
+            {allSongs[songIndex]?.artist}
             <span className='text-sm text-textColor font-semibold'>
               ({allSongs[songIndex]?.category})
             </span>
@@ -53,36 +70,37 @@ const MusicPlayer = () => {
 
           <motion.i
             whileTap={{ scale: 0.8 }}
-            // onClick={() => setIsPlayList(!isPlayList)}
+            onClick={() => setIsPlayList(!isPlayList)}
           >
-            <RiPlayListFill className="text-textColor hove:text-headingColor"/>
-          </motion.i>
-         </div>
 
-         <div className='flex-1'>
-            <AudioPlayer
+            <RiPlayListFill className='text-textColor hover:text-headingColor text-2xl cursor-pointer' />
+
+
+          </motion.i>
+        </div>
+
+        <div className='flex-1'>
+          <AudioPlayer
+              //where tthe song is plying from
               src={allSongs[songIndex]?.songURL}
               onPlay={() => console.log("is playing")}
               autoPlay={false}
               showSkipControls={true}
-              // onClickNext={nextTrack}
-              // onClickPrevious={previousTrack}
-          />
-         </div> 
+              onClickNext={nextTrack}
+              onClickPrevious={previousTrack}
+            />
+        </div>
 
-         {
-             isPlayList && (
-              <PlayListCard />
-             )
-         } 
-      </div> 
+        {isPlayList && <PlayListCard />}
+      </div>
     </div>
-  )
-}
+  );
+};
+
 
 
 export const PlayListCard = () => {
-  const [{  allSongs, songIndex, isSongPlaying }, dispatch]: any = useStateValue();
+  const [{ allSongs, songIndex, isSongPlaying}, dispatch]: any = useStateValue();
 
   useEffect(() => {
     if (!allSongs) {
@@ -93,42 +111,39 @@ export const PlayListCard = () => {
         });
       });
     }
-  }, []);
+  }, [])
 
-  const setCurrentPlaySong = (si: any) => {
-    if (!isSongPlaying) {
+   const setCurrentPlaySong = (index: any) => {
+    if(!isSongPlaying){
       dispatch({
         type: actionType.SET_ISSONG_PLAYING,
         isSongPlaying: true,
       });
     }
-    if (songIndex !== si) {
+
+    if(songIndex !== index){
       dispatch({
         type: actionType.SET_SONG_INDEX,
-        songIndex: si,
+        songIndex: index,
       });
     }
   };
 
-
-
-
   return (
-    <div className="absolute left-4 bottom-24 gap-2 py-2 w-350 max-w-[350px] h-510 max-h-[510px] flex flex-col overflow-y-scroll scrollbar-thin rounded-md shadow-md bg-primary">
-      {
-        allSongs.length > 0 ? (
-          allSongs.map((music: any, index: any) => (
+    <div className='absolute left-4 bottom-24 gap-2 py-2 w-350 max-w-[350px] h-510 max-h-[510px] flex flex-col overflow-y-scroll scrollbar-thin rounded-md shadow-md bg-primary'>
+       {
+         allSongs.length > 0 ? (
+            allSongs.map((music: any, index: any) => (
             <motion.div
-            initial={{ opacity: 0, translateX: -50 }}
-            animate={{ opacity: 1, translateX: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="group w-full p-4 hover:bg-card flex gap-3 items-center cursor-pointer bg-transparent"
-            onClick={() => setCurrentPlaySong(index)}
-            key={index}
+              initial={{ opacity: 0, translateX: -50 }}
+              animate={{ opacity: 1, translateX: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="group w-full p-4 hover:bg-card flex gap-3 items-center cursor-pointer bg-transparent"
+              onClick={() => setCurrentPlaySong(index)}
             >
-              <IoMusicalNote className="text-textColor group-hover:text-headingColor text-2xl cursor-pointer" />
+            
 
-
+            <IoMusicalNote className="text-textColor group-hover:text-headingColor text-2xl cursor-pointer" />
             <div className="flex items-start flex-col">
               <p className="text-lg text-headingColor font-semibold">
                 {`${
@@ -145,50 +160,12 @@ export const PlayListCard = () => {
                 </span>
               </p>
             </div>
-
             </motion.div>
-          ))
-        ): <></>}
-      {/* Playlistcard */}
+        ))
+       ): <></>}
     </div>
-
   )
 
 }
 
 export default MusicPlayer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

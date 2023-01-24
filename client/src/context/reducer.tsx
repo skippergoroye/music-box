@@ -85,7 +85,6 @@ const reducer = (state: any, action: any) => {
                 ...state,
                 songIndex: action.songIndex,
             };
-            
         default: 
             return state;
     }
