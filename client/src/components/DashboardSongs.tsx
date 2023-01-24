@@ -102,7 +102,7 @@ const DashboardSongs = () => {
 
 export const SongContainer = ({ data }: any) => {
   return (
-    <div className="w-full flex flex-wrap gap-3 items-center justify-evenly">
+      <div className="w-full flex flex-wrap gap-3 items-center justify-evenly">
       {
         data && (
           data?.map((song: any, index: any)=>(

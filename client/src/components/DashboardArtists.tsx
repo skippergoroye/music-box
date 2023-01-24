@@ -21,10 +21,6 @@ const DashboardArtists = () => {
     <div className="w-full p-4 flex items-center justify-center flex-col">
        <div className="relative w-full my-8 p-4 py-16 border border-gray-600 rounded-md">
         <ArtistContainer data={allArtist} />
-        
-       
-
-        
       </div>
     </div>
   )
